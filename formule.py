@@ -1,22 +1,18 @@
 import math
 
 
-def get_beginsnelheid_km_per_h() -> float:
+def beginsnelheid_m_per_s() -> float:
     while True:
         try:
             beginsnelheid_km_per_h: float = float(input("Wat is de beginsnelheid in kilometer per uur? "))
             if beginsnelheid_km_per_h < 0:
                 raise ValueError
-            return beginsnelheid_km_per_h
+            return beginsnelheid_km_per_h * 1000 / 3600   # km/h -> m/s
         except ValueError:
             print("Beginsnelheid moet een getal groter dan 0 zijn!")
 
 
-def beginsnelheid_m_per_s() -> float:
-    return get_beginsnelheid_km_per_h() * 1000 / 3600
-
-
-def get_beginhoek_graden() -> float:
+def beginhoek_radialen() -> float:
     while True:
         try:
             beginhoek_graden: float = float(input("Wat is de beginhoek in graden? "))
@@ -24,13 +20,9 @@ def get_beginhoek_graden() -> float:
                 raise ValueError
             if beginhoek_graden > 90:
                 raise ValueError
-            return beginhoek_graden
+            return math.radians(beginhoek_graden)   # graden -> radialen
         except ValueError:
             print("Beginhoek met een getal tussen 0° en 90° zijn!")
-
-
-def beginhoek_radialen() -> float:
-    return math.radians(get_beginhoek_graden())
 
 
 def bereken_worp(beginsnelheid_m_per_s: float, beginhoek_radialen: float) -> tuple:
@@ -40,7 +32,7 @@ def bereken_worp(beginsnelheid_m_per_s: float, beginhoek_radialen: float) -> tup
     return vliegtijd, vliegafstand
 
 
-def print_berekende_worp(vliegtijd, vliegafstand):
+def print_berekende_worp(vliegtijd: float, vliegafstand: float):
     aantal_decimalen = 2
     print(f"\nHet voorwerp landt na {round(vliegtijd, aantal_decimalen)} seconden.")
     print(f"Het voorwerp vloog {round(vliegafstand, aantal_decimalen)} meter.\n")
