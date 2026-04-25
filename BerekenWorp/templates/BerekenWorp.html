@@ -7,5 +7,32 @@
 </head>
 <body>
 Hello, world!
+
+<form method="post">
+    {% csrf_token %}
+
+    <div>
+        <label for="beginsnelheid_km_per_h">Beginsnelheid (km/h)</label>
+        <input type="number" step="0.01" id="beginsnelheid_km_per_h" name="beginsnelheid_km_per_h" required>
+    </div>
+
+    <div>
+        <label for="beginhoek_graden">Beginhoek (graden)</label>
+        <input type="number" step="0.01" id="beginhoek_graden" name="beginhoek_graden" required>
+    </div>
+
+    <div>
+        <button type="submit">Bereken</button>
+    </div>
+</form>
+
+{% if error %}
+    <div>{{ error | safe }}</div>
+{% endif %}
+
+{% if result %}
+    <div>{{ result | safe }}</div>
+{% endif %}
+
 </body>
 </html>
