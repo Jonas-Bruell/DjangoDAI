@@ -27,22 +27,22 @@ def beginhoek_radialen() -> float:
 
 def bereken_worp(beginsnelheid_m_per_s: float, beginhoek_radialen: float) -> tuple:
     gravitatieconstante = 9.81
-    vliegtijd: float = 2 * beginsnelheid_m_per_s * math.sin(beginhoek_radialen) / gravitatieconstante
-    vliegafstand: float = beginsnelheid_m_per_s ** 2 * math.sin(2 * beginhoek_radialen) / gravitatieconstante
-    return vliegtijd, vliegafstand
+    vliegtijd_seconden: float = 2 * beginsnelheid_m_per_s * math.sin(beginhoek_radialen) / gravitatieconstante
+    vliegafstand_meter: float = beginsnelheid_m_per_s ** 2 * math.sin(2 * beginhoek_radialen) / gravitatieconstante
+    return vliegtijd_seconden, vliegafstand_meter
 
 
-def print_berekende_worp(vliegtijd: float, vliegafstand: float):
+def print_berekende_worp(vliegtijd_seconden: float, vliegafstand_meter: float):
     aantal_decimalen = 2
-    print(f"\nHet voorwerp landt na {round(vliegtijd, aantal_decimalen)} seconden.")
-    print(f"Het voorwerp vloog {round(vliegafstand, aantal_decimalen)} meter.\n")
+    print(f"\nHet voorwerp landt na {round(vliegtijd_seconden, aantal_decimalen)} seconden.")
+    print(f"Het voorwerp vloog {round(vliegafstand_meter, aantal_decimalen)} meter.\n")
 
 
 def main():
     # We gooien een voorwerp op Aarde (g=9.81) met een beginhoek (in 1) en beginsnelheid (in 2)
     # We we berekenen wanneer het voorwerp de grond raakt (uit 1) en hoe ver weg het vliegt (uit 2)
-    vliegtijd, vliegafstand = bereken_worp(beginsnelheid_m_per_s(), beginhoek_radialen())
-    print_berekende_worp(vliegtijd, vliegafstand)
+    vliegtijd_seconden, vliegafstand_meter = bereken_worp(beginsnelheid_m_per_s(), beginhoek_radialen())
+    print_berekende_worp(vliegtijd_seconden, vliegafstand_meter)
 
 
 main()
