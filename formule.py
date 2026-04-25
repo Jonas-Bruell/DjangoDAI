@@ -1,18 +1,18 @@
 import math
 
 
-def beginsnelheid_m_per_s() -> float:
+def beginsnelheid_km_per_h() -> float:
     while True:
         try:
             beginsnelheid_km_per_h: float = float(input("Wat is de beginsnelheid in kilometer per uur? "))
             if beginsnelheid_km_per_h < 0:
                 raise ValueError
-            return beginsnelheid_km_per_h * 1000 / 3600   # km/h -> m/s
+            return beginsnelheid_km_per_h
         except ValueError:
             print("Beginsnelheid moet een getal groter dan 0 zijn!")
 
 
-def beginhoek_radialen() -> float:
+def beginhoek_graden() -> float:
     while True:
         try:
             beginhoek_graden: float = float(input("Wat is de beginhoek in graden? "))
@@ -20,7 +20,7 @@ def beginhoek_radialen() -> float:
                 raise ValueError
             if beginhoek_graden > 90:
                 raise ValueError
-            return math.radians(beginhoek_graden)   # graden -> radialen
+            return beginhoek_graden
         except ValueError:
             print("Beginhoek met een getal tussen 0° en 90° zijn!")
 
@@ -41,7 +41,9 @@ def print_berekende_worp(vliegtijd_seconden: float, vliegafstand_meter: float):
 def main():
     # We gooien een voorwerp op Aarde (g=9.81) met een beginhoek (in 1) en beginsnelheid (in 2)
     # We we berekenen wanneer het voorwerp de grond raakt (uit 1) en hoe ver weg het vliegt (uit 2)
-    vliegtijd_seconden, vliegafstand_meter = bereken_worp(beginsnelheid_m_per_s(), beginhoek_radialen())
+    beginsnelheid_m_per_s = beginsnelheid_km_per_h() * 1000 / 3600
+    beginhoek_radialen = math.radians(beginhoek_graden())
+    vliegtijd_seconden, vliegafstand_meter = bereken_worp(beginsnelheid_m_per_s, beginhoek_radialen)
     print_berekende_worp(vliegtijd_seconden, vliegafstand_meter)
 
 
