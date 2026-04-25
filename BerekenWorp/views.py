@@ -1,7 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 # Create your views here.
 def bereken_worp(request):
-    return HttpResponse("Hello, world!")
-
+    return render(request, 'BerekenWorp.html')
