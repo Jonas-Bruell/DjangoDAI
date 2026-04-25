@@ -4,35 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bereken Worp</title>
+    <style>
+        button {
+            cursor: pointer;
+        }
+        label {
+            padding-right: 30px;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        table th {
+            padding-right: 30px;
+        }
+        thead tr {
+            background-color: #aaa;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #ddd;
+        }
+    </style>
 </head>
 <body>
-Hello, world!
-
-<form method="post">
-    {% csrf_token %}
-
-    <div>
-        <label for="beginsnelheid_km_per_h">Beginsnelheid (km/h)</label>
-        <input type="number" step="0.01" id="beginsnelheid_km_per_h" name="beginsnelheid_km_per_h" required>
-    </div>
-
-    <div>
-        <label for="beginhoek_graden">Beginhoek (graden)</label>
-        <input type="number" step="0.01" id="beginhoek_graden" name="beginhoek_graden" required>
-    </div>
-
-    <div>
-        <button type="submit">Bereken</button>
-    </div>
-</form>
-
-{% if error %}
-    <div>{{ error | safe }}</div>
-{% endif %}
-
-{% if result %}
-    <div>{{ result | safe }}</div>
-{% endif %}
-
+    <section>
+        <h2>Worp berekenaar:</h2>
+        <div style="display: flex; flex-direction: row">
+            <div style="padding-right: 30px">
+                <form method="post">
+                    {% csrf_token %}
+                    <div style="max-width:350px; display: grid; grid-template-columns: auto auto;">
+                        <label for="beginsnelheid_km_per_h">Beginsnelheid (km/h)</label>
+                        <input type="number" step="0.01" id="beginsnelheid_km_per_h" name="beginsnelheid_km_per_h" required>
+                        <label for="beginhoek_graden">Beginhoek (graden)</label>
+                        <input type="number" step="0.01" id="beginhoek_graden" name="beginhoek_graden" required>
+                    </div>
+                    <div style="max-width:300px; display: flex; justify-content: center; padding-top: 10px;">
+                        <button type="submit">Bereken</button>
+                    </div>
+                </form>
+            </div>
+            <div>
+            {% if error %}
+                <div style="color: red;">{{ error | safe }}</div>
+            {% endif %}
+            {% if result %}
+                <div style="color: green;">{{ result | safe }}</div>
+            {% endif %}
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2>Vorige resultaten:</h2>
+        {% if history %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Berekendatum</th>
+                        <th>Beginsnelheid (km/h)</th>
+                        <th>Beginhoek (graden)</th>
+                        <th>Vliegtijd (seconden)</th>
+                        <th>Vliegafstand (meter)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in history %}
+                    <tr>
+                        <td>{{ entry.date|date:"M d, H:i" }}</td>
+                        <td>{{ entry.beginsnelheid_km_per_h }}</td>
+                        <td>{{ entry.beginhoek_graden }}</td>
+                        <td>{{ entry.vliegtijd_seconden }}</td>
+                        <td>{{ entry.vliegafstand_meter }}</td>
+                        <td>
+                            <form method="post" action="{% url 'item_delete' entry.id %}">
+                                {% csrf_token %}
+                                <button type="submit" onclick="return confirm('Ben je zeker dat je deze berekening wilt verwijderen?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </section>
 </body>
 </html>
